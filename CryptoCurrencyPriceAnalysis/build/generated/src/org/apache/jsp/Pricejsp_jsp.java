@@ -74,7 +74,7 @@ public final class Pricejsp_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        </select>\r\n");
       out.write("        <br />\r\n");
       out.write("        <div>\r\n");
-      out.write("            <table border=\"2\" width=\"250\" cellspacing=\"1\" cellpadding=\"1\" size >\r\n");
+      out.write("            <table border=\"2\" width=\"250\" cellspacing=\"1\" cellpadding=\"1\" >\r\n");
       out.write("                <thead>\r\n");
       out.write("                    <tr>\r\n");
       out.write("                        <th>Exchanges</th>\r\n");
