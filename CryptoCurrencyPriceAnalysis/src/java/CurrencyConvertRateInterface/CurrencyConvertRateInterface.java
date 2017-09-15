@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package src;
+package CurrencyConvertRateInterface;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,7 +20,7 @@ import javax.json.JsonReader;
  *
  * @author 000988555
  */
-public class CurrencyExchange {
+public class CurrencyConvertRateInterface {
     public static Map<String,Double> getRate() throws MalformedURLException, IOException {
         Map<String,Double>rateMap = new HashMap();
         URL url = new URL("http://api.fixer.io/latest?base=USD");

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package src;
+package ExchangesInterface;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,14 +12,17 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.json.stream.JsonParser;
 
 /**
  *
  * @author 000988555
  */
-public class BitCoin {
-    public static Map<String,String> dataMap =new HashMap<String,String>();
+public class IR {
+     public static Map<String,String> dataMap =new HashMap<String,String>();
       public static Map<String,String> getPrice() throws MalformedURLException, IOException {
         Map<String,String>priceMap = new HashMap();
         String price;
@@ -72,7 +75,33 @@ public class BitCoin {
          }
      }
  }
-
+    
    return priceMap; 
 }
+  public static Map<String,Double> getOrder() throws MalformedURLException, IOException {
+       Map<String,Double>orderMap = new HashMap();
+        URL url = new URL("https://api.independentreserve.com/Public/GetOrderBook?primaryCurrencyCode=xbt&secondaryCurrencyCode=aud");
+         InputStream is = url.openStream();
+        try (JsonReader reader = Json.createReader(is)) {
+             JsonObject orderObject =reader.readObject();
+            
+            JsonArray buyArray = orderObject.getJsonArray("BuyOrders");
+            double buy1Price= buyArray.getJsonObject(0).getJsonNumber("Price").doubleValue();
+            orderMap.put("buyPrice", buy1Price);
+            double buy1Volume=buyArray.getJsonObject(0).getJsonNumber("Volume").doubleValue();
+            orderMap.put("buyVolume", buy1Volume);
+            
+            
+            
+            JsonArray sellArray = orderObject.getJsonArray("SellOrders");
+            double sell1Price= sellArray.getJsonObject(0).getJsonNumber("Price").doubleValue();
+            orderMap.put("sellPrice", sell1Price);
+            double sell1Volume=sellArray.getJsonObject(0).getJsonNumber("Volume").doubleValue();
+            orderMap.put("sellVolume", sell1Volume);
+            reader.close();
+            
+            
+        }
+       return orderMap; 
+  }    
 }
