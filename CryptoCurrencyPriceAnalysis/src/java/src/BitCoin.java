@@ -19,7 +19,7 @@ import javax.json.stream.JsonParser;
  * @author 000988555
  */
 public class BitCoin {
-    
+    public static Map<String,String> dataMap =new HashMap<String,String>();
       public static Map<String,String> getPrice() throws MalformedURLException, IOException {
         Map<String,String>priceMap = new HashMap();
         String price;
@@ -45,12 +45,28 @@ public class BitCoin {
                     System.out.println("---------");
                     priceMap.put("DayLowestPrice", price);
                     break;
+                case "CurrentLowestOfferPrice":
+                    parser.next();
+                    System.out.print("CurrentLowestOfferPrice: ");
+                    price=parser.getString();
+                    System.out.println(price);
+                    System.out.println("---------");
+                    priceMap.put("CurrentLowestOfferPrice", price);
+                    break;
                  case "CurrentHighestBidPrice":
                     parser.next();
                     price=parser.getString();
                     System.out.print("CurrentHighestBidPrice: ");
                     System.out.println(price);
                     priceMap.put("CurrentHighestBidPrice", price);
+                    break;
+                  case "LastPrice":
+                    parser.next();
+                    System.out.print("LastPrice: ");
+                    price=parser.getString();
+                    System.out.println(price);
+                    System.out.println("---------");
+                    priceMap.put("LastPrice", price);
                     break;
              }
          }

@@ -94,11 +94,11 @@
                     </tr>
                     <tr>
                         <td>Independent Researve</td>
+                        <td><%= BitCoin.getPrice().get("CurrentHighestBidPrice")%></td>
                         <td></td>
+                        <td><%= BitCoin.getPrice().get("CurrentLowestOfferPrice")%></td>
                         <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td><%= BitCoin.getPrice().get("LastPrice")%></td>
                     </tr>
                     
                 </tbody>
