@@ -5,6 +5,9 @@
  */
 package ExchangesInterface;
 
+import CurrencyConvert.CurrencyRate;
+import static ExchangesInterface.BtcMarkets.getLastPrice;
+import static ExchangesInterface.BtcMarkets.getOrder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -35,9 +38,7 @@ public class IR {
               switch (parser.getString()) {
                  case "DayHighestPrice":
                     parser.next();
-                    System.out.print("DayHighestPrice: ");
                     price=parser.getString();
-                    System.out.println(price);
                     priceMap.put("DayHighestPrice",price);
                     break;
                 case "DayLowestPrice":
@@ -104,4 +105,33 @@ public class IR {
         }
        return orderMap; 
   }    
+   public static Map<String,Double> getLastPrice() throws MalformedURLException, IOException {
+       Map<String,Double>orderMap = new HashMap();
+        URL url = new URL("https://api.independentreserve.com/Public/GetMarketSummary?primaryCurrencyCode=xbt&secondaryCurrencyCode=aud");
+         InputStream is = url.openStream();
+        try (JsonReader reader = Json.createReader(is)) {
+             JsonObject orderObject =reader.readObject();
+             double lastPrice =orderObject.getJsonNumber("LastPrice").doubleValue();
+            orderMap.put("LastPrice", lastPrice);        
+            reader.close();
+            
+            
+        }
+       return orderMap; 
+     }   
+    public static Map<String,Double>getMarketinUSD() throws IOException{
+         Map<String,Double>MarketMap =new HashMap();
+         double rate=CurrencyRate.getRate().get("AUD");
+         Map<String,Double> orderMap =getOrder();
+         for(Map.Entry<String,Double> e : orderMap.entrySet()){
+             double value  = e.getValue()/rate;
+             MarketMap.put(e.getKey(), value);
+         }
+         Map<String,Double> lastPriceMap =getLastPrice();
+         for(Map.Entry<String,Double> e : lastPriceMap.entrySet()){
+             double value  = e.getValue()/rate;
+             MarketMap.put(e.getKey(), value);
+         }
+         return MarketMap;
+     }
 }

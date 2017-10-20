@@ -5,12 +5,17 @@
 --%>
 
 
+
+<%@page import="CurrencyConvert.CurrencyRate"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="ExchangesInterface.Wex"%>
 <%@page import="ExchangesInterface.BtcMarkets"%>
 <%@page import="ExchangesInterface.BitStamp"%>
 <%@page import="ExchangesInterface.BitFinex"%>
 <%@page import="ExchangesInterface.IR"%>
 
-<%@page import="CurrencyConvertRateInterface.CurrencyConvertRateInterface"%>
+
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -26,10 +31,11 @@
         <div class="container"> 
         <!--Two Drop down list-->
         <select name="Currency" class="selectpicker" >
-            <option selected>AUD</option>
-            <option>USD</option>
-            <option>CNY</option>
+            <option value="AUD">AUD</option>
+            <option selected value="USD">USD</option>
+            <option value="CNY">CNY</option>
         </select>
+       
         
         <select name="Crypto"class="selectpicker" >
             <option selected>BTC</option>
@@ -51,14 +57,22 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
+                        <td>Wex</td>
+                        <td><%= Wex.getOrder().get("buyPrice") %></td>
+                        <td><%= Wex.getOrder().get("buyVolume")%></td>
+                        <td><%= Wex.getOrder().get("sellPrice")%></td>
+                        <td><%= Wex.getOrder().get("sellVolume")%></td>
+                        <td><%= Wex.getLastPrice().get("LastPrice")%></td>
+                    </tr>
                    
                     <tr>
                         <td>BtcMarkets</td>
-                        <td><%= BtcMarkets.getOrder().get("buyPrice")%></td>
-                        <td><%= BtcMarkets.getOrder().get("buyVolume")%></td>
-                        <td><%= BtcMarkets.getOrder().get("sellPrice")%></td>
-                        <td><%= BtcMarkets.getOrder().get("sellVolume")%></td>
-                        <td><%= BtcMarkets.getLastPrice().get("LastPrice")%></td>
+                        <td><%= BtcMarkets.getMarketinUSD().get("buyPrice") %></td>
+                        <td><%= BtcMarkets.getMarketinUSD().get("buyVolume")%></td>
+                        <td><%= BtcMarkets.getMarketinUSD().get("sellPrice")%></td>
+                        <td><%= BtcMarkets.getMarketinUSD().get("sellVolume")%></td>
+                        <td><%= BtcMarkets.getMarketinUSD().get("LastPrice")%></td>
                     </tr>
                   
                    
@@ -80,17 +94,20 @@
                     </tr>
                     <tr>
                         <td>Independent</td>
-                        <td><%= IR.getOrder().get("buyPrice")%></td>
-                        <td><%= IR.getOrder().get("buyVolume")%></td>
-                        <td><%= IR.getOrder().get("sellPrice")%></td>
-                        <td><%= IR.getOrder().get("sellVolume")%></td>
-                        <td><%= IR.getPrice().get("LastPrice")%></td>
+                        <td><%= IR.getMarketinUSD().get("buyPrice")%></td>
+                        <td><%= IR.getMarketinUSD().get("buyVolume")%></td>
+                        <td><%= IR.getMarketinUSD().get("sellPrice")%></td>
+                        <td><%= IR.getMarketinUSD().get("sellVolume")%></td>
+                        <td><%= IR.getMarketinUSD().get("LastPrice")%></td>
                     </tr>
                     
                 </tbody>
             </table>
 
-            
+                        <p><%=  CurrencyRate.getRate().get("USD") %></p>
+                        
+                         <p><%=  CurrencyRate.getRate().get("AUD") %></p> 
+                         <p> <%=  request.getParameter("Currency") %></p>
             </div>
         
         
