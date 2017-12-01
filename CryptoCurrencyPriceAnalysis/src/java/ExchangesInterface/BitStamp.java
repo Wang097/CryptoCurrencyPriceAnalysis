@@ -15,6 +15,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -24,10 +26,48 @@ import javax.json.JsonReader;
  *
  * @author xiaoh
  */
-public class BitStamp {
-    public static Map<String,String> getOrder() throws MalformedURLException, IOException {
+public class BitStamp extends Market{
+
+    public BitStamp() {
+         this("btc");
+         this.crytpoType="btc";
+        
+    }
+    public BitStamp(String cryptoType) {
+        this.crytpoType =cryptoType;
+        getData(this.crytpoType);
+    }
+
+    public void getData(String type) {
+          String dataurl ="";
+          if(type.equals("btc")){
+              dataurl="https://www.bitstamp.net/api/order_book/";
+          }
+          // 
+        //  else if(){
+        //     dataurl=""
+        //  }
+          Map<String,String>orderMap = new HashMap<String,String>();
+        try {
+            orderMap =  getOrder(dataurl);
+        } catch (IOException ex) {
+            Logger.getLogger(BitStamp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         this.buyPrice =Double.parseDouble(orderMap.get("buyPrice"));
+         this.buyVolume =Double.parseDouble(orderMap.get("buyVolume"));
+         this.sellPrice=Double.parseDouble(orderMap.get("sellPrice"));
+         this.sellVolume =Double.parseDouble(orderMap.get("sellVolume"));
+        try {
+            this.lastTadePrice =Double.parseDouble(getLastTradePrice());
+        } catch (IOException ex) {
+            Logger.getLogger(BitStamp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+              
+    }
+    public  Map<String,String> getOrder(String dataurl) throws MalformedURLException, IOException {
        Map<String,String>orderMap = new HashMap();
-        URL url = new URL("https://www.bitstamp.net/api/order_book/");
+        URL url = new URL(dataurl);
+       // URL url = new URL("https://www.bitstamp.net/api/order_book/");
          InputStream is = url.openStream();
         try (JsonReader reader = Json.createReader(is)) {
              JsonObject orderObject =reader.readObject();
@@ -65,5 +105,17 @@ public class BitStamp {
             
         }
        return orderMap; 
+     }    
+    
+    public String  getLastTradePrice() throws MalformedURLException, IOException {
+       String lastTradePrice;
+        URL url = new URL("https://www.bitstamp.net/api/ticker/");
+         InputStream is = url.openStream();
+        try (JsonReader reader = Json.createReader(is)) {
+             JsonObject orderObject =reader.readObject();
+             lastTradePrice =orderObject.getJsonString("last").getString();     
+            reader.close();      
+        }
+       return lastTradePrice;
      }    
 }

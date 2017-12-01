@@ -6,6 +6,8 @@
 package ExchangesInterface;
 
 import CurrencyConvert.CurrencyRate;
+import static ExchangesInterface.BitFinex.getLastPrice;
+import static ExchangesInterface.BitFinex.getOrder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -13,6 +15,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -22,9 +26,35 @@ import javax.json.JsonReader;
  *
  * @author xiaoh
  */
-public class BtcMarkets {
+public class BtcMarkets extends Market {
+    
+     public BtcMarkets() {
+        getData();
+         this.crytpoType="Btc";
+        
+    }
+     @Override
+    public void getData() {
+         
+          Map<String,Double>orderMap = new HashMap<>();
+        try {
+            orderMap = getMarketinUSD();
+        } catch (IOException ex) {
+            Logger.getLogger(BitStamp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         this.buyPrice =orderMap.get("buyPrice");
+         this.buyVolume =orderMap.get("buyVolume");
+         this.sellPrice=orderMap.get("sellPrice");
+         this.sellVolume =orderMap.get("sellVolume");
+        
+         this.lastTadePrice=orderMap.get("LastPrice");
+       
+              
+    }
+    
+    
         public static Map<String,Double> getOrder() throws MalformedURLException, IOException {
-       Map<String,Double>orderMap = new HashMap();
+         Map<String,Double>orderMap = new HashMap();
         URL url = new URL("https://api.btcmarkets.net//market/BTC/AUD/orderbook");
          InputStream is = url.openStream();
         try (JsonReader reader = Json.createReader(is)) {
@@ -69,8 +99,12 @@ public class BtcMarkets {
          double rate=CurrencyRate.getRate().get("AUD");
          Map<String,Double> orderMap =getOrder();
          for(Entry<String,Double> e : orderMap.entrySet()){
+             if(e.getKey().contains("Price")){
              double value  = e.getValue()/rate;
              MarketMap.put(e.getKey(), value);
+             }
+             else
+                 MarketMap.put(e.getKey(), e.getValue());
          }
          Map<String,Double> lastPriceMap =getLastPrice();
          for(Entry<String,Double> e : lastPriceMap.entrySet()){

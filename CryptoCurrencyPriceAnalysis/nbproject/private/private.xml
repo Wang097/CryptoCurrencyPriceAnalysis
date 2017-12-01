@@ -3,11 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/5WorkProject/CryptoCurrencyPriceAnalysis/CryptoCurrencyPriceAnalysis/src/java/ExchangesInterface/BitStamp.java</file>
-            <file>file:/D:/5WorkProject/CryptoCurrencyPriceAnalysis/CryptoCurrencyPriceAnalysis/src/java/ExchangesInterface/Wex.java</file>
-            <file>file:/D:/5WorkProject/CryptoCurrencyPriceAnalysis/CryptoCurrencyPriceAnalysis/web/index.jsp</file>
-            <file>file:/D:/5WorkProject/CryptoCurrencyPriceAnalysis/CryptoCurrencyPriceAnalysis/src/java/DataHandling/DataTransfer.java</file>
-            <file>file:/D:/5WorkProject/CryptoCurrencyPriceAnalysis/CryptoCurrencyPriceAnalysis/src/java/ExchangesInterface/BitFinex.java</file>
+            <file>file:/C:/Users/Alan%20Sun/Desktop/CryptoCurrencyPriceAnalysis%2029122017/CryptoCurrencyPriceAnalysis/web/Logout.jsp</file>
+            <file>file:/C:/Users/Alan%20Sun/Desktop/CryptoCurrencyPriceAnalysis%2029122017/CryptoCurrencyPriceAnalysis/web/TransactionRecord.jsp</file>
+            <file>file:/C:/Users/Alan%20Sun/Desktop/CryptoCurrencyPriceAnalysis%2029122017/CryptoCurrencyPriceAnalysis/web/priceDiff.jsp</file>
+            <file>file:/C:/Users/Alan%20Sun/Desktop/CryptoCurrencyPriceAnalysis%2029122017/CryptoCurrencyPriceAnalysis/web/index.jsp</file>
+            <file>file:/C:/Users/Alan%20Sun/Desktop/CryptoCurrencyPriceAnalysis%2029122017/CryptoCurrencyPriceAnalysis/web/InputTransaction.jsp</file>
+            <file>file:/C:/Users/Alan%20Sun/Desktop/CryptoCurrencyPriceAnalysis%2029122017/CryptoCurrencyPriceAnalysis/web/Signup.jsp</file>
+            <file>file:/C:/Users/Alan%20Sun/Desktop/CryptoCurrencyPriceAnalysis%2029122017/CryptoCurrencyPriceAnalysis/web/Success.jsp</file>
+            <file>file:/C:/Users/Alan%20Sun/Desktop/CryptoCurrencyPriceAnalysis%2029122017/CryptoCurrencyPriceAnalysis/web/marketInfo.jsp</file>
+            <file>file:/C:/Users/Alan%20Sun/Desktop/CryptoCurrencyPriceAnalysis%2029122017/CryptoCurrencyPriceAnalysis/web/Signin.jsp</file>
         </group>
     </open-files>
 </project-private>

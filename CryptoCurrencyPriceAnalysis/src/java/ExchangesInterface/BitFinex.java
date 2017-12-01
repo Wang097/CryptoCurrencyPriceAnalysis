@@ -15,6 +15,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -25,7 +27,39 @@ import javax.json.JsonReader;
  *
  * @author xiaoh
  */
-public class BitFinex {
+public class BitFinex extends Market {
+     public BitFinex() {
+        getData();
+         this.crytpoType="BitFinex";
+        
+    }
+//    public BitFinex(String cryptoType) {
+//        this.crytpoType =cryptoType;
+//        getData( cryptoType);
+//    }
+
+     @Override
+    public void getData() {
+         
+          Map<String,String>orderMap = new HashMap<>();
+        try {
+            orderMap =  getOrder();
+        } catch (IOException ex) {
+            Logger.getLogger(BitStamp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         this.buyPrice =Double.parseDouble(orderMap.get("buyPrice"));
+         this.buyVolume =Double.parseDouble(orderMap.get("buyVolume"));
+         this.sellPrice=Double.parseDouble(orderMap.get("sellPrice"));
+         this.sellVolume =Double.parseDouble(orderMap.get("sellVolume"));
+        try {
+            this.lastTadePrice =Double.parseDouble(getLastPrice().get("LastPrice"));
+        } catch (IOException ex) {
+            Logger.getLogger(BitStamp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+              
+    }
+    
+    
       public static Map<String,String> getOrder() throws MalformedURLException, IOException {
         Map<String,String>orderMap = new HashMap();
         URL url = new URL("https://api.bitfinex.com/v1/book/btcusd");
